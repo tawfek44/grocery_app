@@ -13,6 +13,7 @@ class DashboardScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
+    DashboardController.dashboardController().getSumInCart();
     return GetBuilder<DashboardController>(builder: (controller){
       return Scaffold(
         body: controller.screens[controller.selectedItem],

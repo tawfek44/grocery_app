@@ -24,9 +24,15 @@ class DashboardController extends GetxController{
   }
   double sumInCart=0;
   void getSumInCart(){
+    sumInCart=0;
     for(int i=0;i<CartController.cartController().quantities.length;i++){
-      sumInCart+=(CartController.cartController().quantities[i]
-          *  HomeController.homeController().productList[i].price);
+      if(HomeController.homeController().productList[i].offer!=null){
+        sumInCart+= HomeController.homeController().productList[i].offer!;
+      }
+      else{
+        sumInCart+= HomeController.homeController().productList[i].price;
+      }
+
     }
     update();
   }

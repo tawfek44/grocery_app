@@ -34,6 +34,7 @@ class HomeController extends GetxController{
     String productObjectString= jsonEncode(pr.toMap());
     CacheHelper.saveData(key: pr.name, value: productObjectString);
     getProducts();
+    CartController.cartController().quantities=[];
     for (var element in productList) {
       if(CacheHelper.getData(element.name)!=null){
         CartController.cartController().quantities.add(1);
@@ -47,11 +48,13 @@ class HomeController extends GetxController{
    productsInCart.remove(pr.name);
    productsInCartList=[];
    CartController.cartController().quantities=[];
-   productsInCart.forEach((key, value) {
-     productsInCartList.add(value);
-     CartController.cartController().quantities.add(1);
-   });
    CacheHelper.removeData(pr.name);
+   for (var element in productList) {
+     if(CacheHelper.getData(element.name)!=null){
+       productsInCartList.add(element);
+       CartController.cartController().quantities.add(1);
+     }
+   }
    DashboardController.dashboardController().getSumInCart();
     update();
   }
